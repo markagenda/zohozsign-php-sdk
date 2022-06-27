@@ -109,7 +109,6 @@ abstract class ApiClient{
         $response   = curl_exec($curl);
         $status     = curl_getinfo( $curl );
 
-
         curl_close($curl);
 
         $mediaName = null;
@@ -224,7 +223,7 @@ abstract class ApiClient{
         }
     }
 
-    private function constructErrorMessageFromAPIResponse( $response ){
+    private static function constructErrorMessageFromAPIResponse( $response ){
 
         // it is possible there are more keys than basic ones.
 

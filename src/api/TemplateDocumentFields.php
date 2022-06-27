@@ -15,7 +15,7 @@ use zsign\api\fields\TextProperty;
 
 
 class TemplateDocumentFields{
-	
+
 	/*
 		USE: for reading template fields
 
@@ -25,20 +25,20 @@ class TemplateDocumentFields{
 	private $document_id;
 	private $fields=array();
 
-	private $date_fields = array(); 	// Array of class date_fields 
-	private $dropdown_fields = array(); // Array of class dropdown_fields 
-	private $file_fields = array(); 	// Array of class file_fields 
-	private $text_fields = array(); 	// Array of class text_fields 
-	private $image_fields = array(); 	// Array of class image_fields 
-	private $check_boxes = array(); 	// Array of class check_boxes 
-	private $radio_groups = array();	// Array of class radio_groups 
+	private $date_fields = array(); 	// Array of class date_fields
+	private $dropdown_fields = array(); // Array of class dropdown_fields
+	private $file_fields = array(); 	// Array of class file_fields
+	private $text_fields = array(); 	// Array of class text_fields
+	private $image_fields = array(); 	// Array of class image_fields
+	private $check_boxes = array(); 	// Array of class check_boxes
+	private $radio_groups = array();	// Array of class radio_groups
 
 	function __construct($response=null){
 
 		if( gettype( $response ) == "object" ){
 			$response = json_decode( json_encode($response) , true );
 		}
-		
+
 		$this->document_id 	= (isset($response["document_id"]))	 ? $response["document_id"]	: null;
 
 		if( isset($response["fields"]) ){
@@ -84,7 +84,7 @@ class TemplateDocumentFields{
 			}
 
 		}
-				
+
 	}
 
 	public function getDocumentId(){
@@ -130,35 +130,35 @@ class TemplateDocumentFields{
 	public function setDocumentId($document_id){
 		$this->document_id = $document_id;
 	}
-	
+
 	public function setFields($fields){
 		$this->fields = $fields;
 	}
-	
+
 	public function setDateFields($date_fields){
 		$this->date_fields = $date_fields;
 	}
-	
+
 	public function setDropdownFields($dropdown_fields){
 		$this->dropdown_fields = $dropdown_fields;
 	}
-	
+
 	public function setFileFields($file_fields){
 		$this->file_fields = $file_fields;
 	}
-	
+
 	public function setTextFields($text_fields){
 		$this->text_fields = $text_fields;
 	}
-	
+
 	public function setImageFields($image_fields){
 		$this->image_fields = $image_fields;
 	}
-	
+
 	public function setCheckBoxes($check_boxes){
 		$this->check_boxes = $check_boxes;
 	}
-	
+
 	public function setRadioGroups($radio_groups){
 		$this->radio_groups = $radio_groups;
 	}*/

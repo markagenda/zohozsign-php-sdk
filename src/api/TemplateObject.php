@@ -110,7 +110,6 @@ class TemplateObject
 			// $this->field_radio_data		= array();
 
 		$this->document_fields 		= array();
-
 		if( isset( $response["document_fields"] ) ){
 			foreach($response["document_fields"] as $obj) // obj = templates>docuemnt_fields>fields[i] = field
 			{
@@ -125,6 +124,8 @@ class TemplateObject
 							$this->field_boolean_data[ $field["field_label"] ] = new PrefillField($field);
 							break;
 						case "textfield":
+                            $this->field_text_data 	 [ $field["field_label"] ] 	= new PrefillField($field);
+							break;
 						case "dropdown":
 							$this->field_text_data 	 [ $field["field_label"] ] 	= new PrefillField($field);
 							break;
@@ -134,6 +135,29 @@ class TemplateObject
 
 					}
 				}
+
+			}
+		}
+    
+        // Action fields
+        if( isset( $response["actions"] ) ){
+			foreach($response["actions"][0]["fields"]  as $fields)
+			{
+				array_push($this->document_fields,new TemplateDocumentFields($fields));
+				switch( $fields["field_category"] ){
+					case "checkbox":
+						$this->field_boolean_data[ $fields["field_label"] ] = new PrefillField($fields);
+						break;
+					case "textfield":
+						$this->field_text_data 	 [ $fields["field_label"] ] = new PrefillField($fields);
+						break;
+					case "dropdown":
+						$this->field_text_data 	 [ $fields["field_label"] ] = new PrefillField($fields);
+						break;
+					case "datefield":
+						$this->field_date_data   [ $fields["field_label"] ]	= new PrefillField($fields) ;
+						break;
+				}		
 
 			}
 		}
@@ -387,7 +411,7 @@ class TemplateObject
 
 	// -------- setters ---------
 	public function setPrefillTextField( $label, $value ){
-		$this->field_text_data 		[ $label ]->setFeildValue($value) ;
+		$this->field_text_data [ $label ]->setFeildValue($value);
 	}
 
 	public function setPrefillBooleanField( $label, $value ){

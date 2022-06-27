@@ -4,7 +4,7 @@ namespace zsign\api;
 
 
 class DocumentFormData{
-	
+
 	private $field_label;
 	private $field_name;
 	private $field_value;
@@ -23,29 +23,29 @@ class DocumentFormData{
 	}
 
 	public function getFieldLabel(){
-		return $this->field_label; 
+		return $this->field_label;
 	}
 
 	public function getFieldName(){
-		return $this->field_name; 
+		return $this->field_name;
 	}
 
 	public function getFieldValue(){
-		return $this->field_value; 
+		return $this->field_value;
 	}
 
 	/*
 	// setters not allowed
 	public function setFieldLabel( $field_label ){
-		$this->field_label = $field_label; 
+		$this->field_label = $field_label;
 	}
 
 	public function setFieldName( $field_name ){
-		$this->field_name = $field_name; 
+		$this->field_name = $field_name;
 	}
 
 	public function setFieldValue( $field_value ){
-		$this->field_value = $field_value; 
+		$this->field_value = $field_value;
 	}*/
 
 
