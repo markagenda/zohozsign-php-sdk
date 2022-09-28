@@ -1,11 +1,28 @@
 {
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:markagenda/zsign-php-sdk.git"
-        }
-    ],
-    "require": {
-        "zoho-sign/php-sdk": "dev-main"
-    }
+	"name": "markagenda/zohozsign-php-sdk",
+	"description": "Fork of Zoho Sign's v1 api wrapper SDK in PHP",
+	"type": "library",
+	"keywords": ["Zoho","Sign","Digital Signature", "Zoho Sign SDK", "Zoho Sign PHP SDK", "Zoho Sign PHP examples"],
+	"homepage": "https://zoho.com.sign",
+	"readme":"./README.md",
+	"authors": [
+		{
+			"name": "Zoho Sign",
+			"email": "sign@zohocorp.com",
+			"homepage": "http://zoho.com/sign",
+			"role": "Developer"
+		}
+	],
+	"support":{
+		"email":"support@zohosign.com",
+		"docs": "https://www.zoho.com/sign/api/"
+	},
+	"require" : {
+		"php" : ">=5.6"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"zsign\\" : "src/"
+		}
+	}
 }
