@@ -5,19 +5,22 @@ namespace zsign\api;
 use zsign\api\Fields;
 
 class Actions
-{ 
-	private $verify_recipient; 
-	private $is_bulk; 
-	private $action_id; 
-	private $action_type; 
-	private $private_notes; 
-	private $recipient_email; 
-	private $signing_order; 
-	private $recipient_name; 
+{
+	private $verify_recipient;
+	private $is_bulk;
+	private $action_id;
+	private $action_type;
+	private $private_notes;
+	private $recipient_email;
+	private $signing_order;
+	private $recipient_name;
 	private $fields; // Object of fields class
-	private $deleted_fields = array(); // Array of class deleted_fields 
-	private $recipient_countrycode; 
-	private $recipient_phonenumber; 
+	private $deleted_fields = array(); // Array of class deleted_fields
+	private $recipient_countrycode;
+	private $recipient_phonenumber;
+    private $in_person_name;
+    private $in_person_email;
+
 
 	private $language;
 	private $is_embedded; 	private $verification_type;
@@ -53,6 +56,9 @@ class Actions
 		$this->fields 				= (isset($response["fields"])) 					? new Fields($response["fields"]) 		: null;
 		$this->recipient_countrycode= (isset($response["recipient_countrycode"])) 	? $response["recipient_countrycode"] 	: null;
 		$this->recipient_phonenumber= (isset($response["recipient_phonenumber"])) 	? $response["recipient_phonenumber"] 	: null;
+        $this->in_person_name 		= (isset($response["in_person_name"]))			? $response["in_person_name"] 			: null;
+        $this->in_person_email 		= (isset($response["in_person_email"]))			? $response["in_person_email"] 			: null;
+
 
 		$this->language 			= (isset($response["language"])) 				? $response["language"] 				: null;
 		$this->verification_type	= (isset($response["verification_type"])) 		? $response["verification_type"] 		: null;
@@ -62,64 +68,64 @@ class Actions
 		$this->role					= (isset($response["role"])) 					? $response["role"] 					: null;
 		$this->is_embedded 			= (isset($response["is_embedded"])) 			? $response["is_embedded"] 				: null;
 
-	} 
+	}
 
 	// GETTERS
 
 	public function getVerifyRecipient(){
 		return $this->verify_recipient;
-	} 
- 
+	}
+
 	public function getIsBulk(){
 		return $this->is_bulk;
-	} 
- 
+	}
+
 	public function getActionId(){
 		return $this->action_id;
-	} 
- 
+	}
+
 	public function getActionType(){
 		return $this->action_type;
-	} 
- 
+	}
+
 	public function getPrivateNotes(){
 		return $this->private_notes;
-	} 
- 
+	}
+
 	public function getRecipientEmail(){
 		return $this->recipient_email;
-	}  
+	}
 
 	public function getActionEmail(){
 		return $this->recipient_email;
-	} 
- 
+	}
+
 	public function getSigningOrder(){
 		return $this->signing_order;
-	} 
- 
+	}
+
 	public function getRecipientName(){
 		return $this->recipient_name;
-	} 
+	}
  	public function getActionName(){
 		return $this->recipient_name;
-	} 
- 
+	}
+
 	public function getFields(){
 		return $this->fields;
-	} 
- 
+	}
+
 	public function getDeletedFields(){
 		return $this->deleted_fields;
-	} 
- 
+	}
+
 	public function getRecipientCountrycode(){
 		return $this->recipient_countrycode;
-	} 
- 
+	}
+
 	public function getRecipientPhonenumber(){
 		return $this->recipient_phonenumber;
-	} 
+	}
 
 	public function getLanguage(){
 		return $this->language;
@@ -141,62 +147,70 @@ class Actions
 		return $this->is_embedded;
 	}
 
+    public function getInPersonName(){
+		return $this->in_person_name;
+	}
+
+    public function getInPersonEmail(){
+		return $this->in_person_email;
+	}
+
 	// SETTERS
- 
+
 	public function setVerifyRecipient($verify_recipient){
 		$this->verify_recipient=$verify_recipient;
-	} 
- 
+	}
+
 	public function setIsBulk($is_bulk){
 		$this->is_bulk = $is_bulk;
-	} 
- 
+	}
+
 	public function setActionId($action_id){
 		$this->action_id=$action_id;
-	} 
- 
+	}
+
 	public function setActionType($action_type){
 		$this->action_type=$action_type;
-	} 
- 
+	}
+
 	public function setPrivateNotes($private_notes){
 		$this->private_notes=$private_notes;
-	} 
- 
+	}
+
 	public function setRecipientEmail($recipient_email){
 		$this->recipient_email=$recipient_email;
-	}  
+	}
 
 	public function setActionEmail($recipient_email){
 		$this->recipient_email=$recipient_email;
-	} 
- 
+	}
+
 	public function setSigningOrder($signing_order){
 		$this->signing_order=$signing_order;
-	} 
- 
+	}
+
 	public function setRecipientName($recipient_name){
 		$this->recipient_name=$recipient_name;
-	}  
+	}
 	public function setActionName($recipient_name){
 		$this->recipient_name=$recipient_name;
-	} 
- 
+	}
+
 	public function setFields($fields){
 		$this->fields=$fields;
-	} 
- 
+	}
+
 	public function setDeletedFields($deleted_fields){
 		array_push($this->deleted_fields,$deleted_fields);
-	} 
- 
+	}
+
 	public function setRecipientCountrycode($recipient_countrycode){
 		$this->recipient_countrycode=$recipient_countrycode;
-	} 
- 
+	}
+
 	public function setRecipientPhonenumber($recipient_phonenumber){
 		$this->recipient_phonenumber=$recipient_phonenumber;
-	} 
+	}
 
 	public function setLanguage( $language ){
 		$this->language = $language;
@@ -205,17 +219,25 @@ class Actions
 	public function setVerificationType( $verification_type ){
 		$this->verification_type = $verification_type;
 	}
- 
+
 	public function setVerificationCode( $verification_code ){
 		$this->verification_code = $verification_code;
 	}
- 
+
  	public function setRole( $role ){
 		$this->role = $role;
 	}
 
 	public function setIsEmbedded( $is_embedded ){
 		$this->is_embedded = $is_embedded;
+	}
+
+    public function setInPersonName($in_person_name){
+		$this->in_person_name = $in_person_name;
+	}
+
+    public function setInPersonEmail($in_person_email){
+		$this->in_person_email = $in_person_email;
 	}
 
 	public function constructJson()
@@ -228,6 +250,8 @@ class Actions
 		$response["recipient_email"]=$this->recipient_email;
 		$response["signing_order"]=$this->signing_order;
 		$response["recipient_name"]=$this->recipient_name;
+        $response["in_person_name"]=$this->in_person_name;
+        $response["in_person_email"]=$this->in_person_email;
 		$response["fields"]= ($this->fields!=NULL) ? $this->fields->constructJson() : NULL ;
 		$response["deleted_fields"]= count($this->deleted_fields)!=0 ? $this->deleted_fields : NULL ;
 		$response["recipient_countrycode"]=$this->recipient_countrycode;
@@ -235,7 +259,7 @@ class Actions
 
 		$response["verification_type"]	= $this->verification_type;
 		$response["verification_code"]	= $this->verification_code;
-		$response["is_embedded"]		= $this->is_embedded;
+	//	$response["is_embedded"]		= $this->is_embedded;
 		$response["language"] 			= $this->language;
 
 		// only for templates

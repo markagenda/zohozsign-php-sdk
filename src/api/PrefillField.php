@@ -6,22 +6,22 @@ use zsign\SignException;
 
 
 class PrefillField{
-	
+
 	private $field_label;
-	private $FIELD_VALUE;
+	private $field_value;
 	private $default_value;
-	
+
 	private $field_category;
 	private $field_type_name;
 
 	function __construct( $field=null ){
-		
+
 		if( gettype( $field ) == "object" ){
 			$field = json_decode( json_encode($field) , true );
 		}
-		
+
 		switch( $field["field_category"] ){
-		// VALIDATION 	
+		// VALIDATION
 			case "dropdown":
 			case "checkbox":
 			case "textfield":
@@ -39,9 +39,9 @@ class PrefillField{
 		}
 
 		$this->field_label			 = $field["field_label"] ;
-		$this->FIELD_VALUE			 = isset( $field["default_value"] ) ? $field["default_value"] : null ; // assigned to default value
-		$this->default_value		 = isset( $field["default_value"] ) ? $field["default_value"] : null ; 
-		
+		$this->field_value			 = isset( $field["default_value"] ) ? $field["default_value"] : null ; // assigned to default value
+		$this->default_value		 = isset( $field["default_value"] ) ? $field["default_value"] : null ;
+
 		$this->field_category		 = $field["field_category"] ;
 		$this->field_type_name		 = $field["field_type_name"] ;
 
@@ -53,14 +53,14 @@ class PrefillField{
 	}
 
 	function getFieldValue(){
-		return $this->FIELD_VALUE;
+		return $this->field_value;
 	}
 
 	function getDefaultValue(){
 		return $this->default_value;
 	}
 
-	function getFeildCategory(){
+	function getFieldCategory(){
 		return $this->field_category;
 	}
 
@@ -69,17 +69,17 @@ class PrefillField{
 	}
 
 	// SETTERS
-	
-	function setFeildValue( $FIELD_VALUE ){
-		$this->FIELD_VALUE 	= $FIELD_VALUE;
+
+	function setFieldValue( $field_value ){
+		$this->field_value 	= $field_value;
 	}
-	
-	
+
+
 	// CONSTRUCT JSON
 
 	function constructJson(){
 
-		$response[ $this->field_label ] = $this->FIELD_VALUE;
+		$response[ $this->field_label ] = $this->field_value;
 
 		return $response;
 	}

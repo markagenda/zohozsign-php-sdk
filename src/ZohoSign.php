@@ -333,6 +333,9 @@ abstract class ZohoSign{
 			null, 									// queryparams
 			null  									// post data
 		);
+        echo '<pre>';
+        print_r($response);
+        die();
 
 		// returning only actions : https://www.zoho.com/sign/api/#get-document-form-data
 		$actionsArr = array();
@@ -700,9 +703,11 @@ abstract class ZohoSign{
 		$payload = array(
 			"data" 			=> json_encode( $data ),
 			"is_quicksend"	=> $quick_send ? 'true' : 'false'
-
 		);
 
+        //  echo '<pre>';
+        //  dd($payload);
+        //  die();
 
 		$response = ApiClient::callSignAPI(
 			"/api/v1/templates/$templateId/createdocument", 	// api

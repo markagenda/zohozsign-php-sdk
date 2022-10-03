@@ -115,6 +115,13 @@ abstract class ApiClient{
 
         $http_code_msg = "HTTP Code : ".$status["http_code"].". ";
 
+        //  if($method == 'POST'){
+        //      echo '<pre>';
+        //      print_r($postData);
+        //      print_r($response);
+        //      print_r($status);
+        // //     die();
+        //  }
         if( $authorizedCall ){
             //   SIGN API/Authorized call
 

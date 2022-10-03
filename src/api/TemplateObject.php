@@ -90,14 +90,15 @@ class TemplateObject
 		$this->self_sign		  	= (isset($response["self_sign"]))		 	? $response["self_sign"]			: false;
 
 		$this->bulk_actions		  	= (isset($response["bulk_actions"])) 		? $response["bulk_actions"]			: null;
-		$this->is_bulk 			  	= (isset($response["is_bulk"]))			 	? $response["is_bulk"]				: null;
-		$this->bulk_template_id  	= (isset($response["bulk_template_id"])) 	? $response["bulk_template_id"]		: null;
+		$this->is_bulk 			  	= (isset($response["is_bulk"]))			 	? $response["is_bulk"]				: false;
+		//$this->bulk_template_id  	= (isset($response["bulk_template_id"])) 	? $response["bulk_template_id"]		: null;
 		$this->custom_data 		  	= (isset($response["custom_data"]))		 	? $response["custom_data"] : "Sent Using Zoho Sign PHP SDK.";
 
 		$this->owner_email		  	= (isset($response["owner_email"])) 		? $response["owner_email"]			: null;
 		$this->owner_first_name   	= (isset($response["owner_first_name"])) 	? $response["owner_first_name"]		: null;
 		$this->owner_last_name  	= (isset($response["owner_last_name"])) 	? $response["owner_last_name"]		: null;
 		$this->owner_id 		  	= (isset($response["owner_id"]))		 	? $response["owner_id"] 			: null;
+
 
 
 
@@ -109,10 +110,14 @@ class TemplateObject
 			// $this->field_image_data		= array();
 			// $this->field_radio_data		= array();
 
+        // echo '<pre>';
+        // dd($response);
+        // die();
 		$this->document_fields 		= array();
 		if( isset( $response["document_fields"] ) ){
 			foreach($response["document_fields"] as $obj) // obj = templates>docuemnt_fields>fields[i] = field
 			{
+
 				array_push($this->document_fields,new TemplateDocumentFields($obj));
 
 				foreach ($obj["fields"] as $field) {
@@ -138,26 +143,29 @@ class TemplateObject
 
 			}
 		}
-    
+
         // Action fields
         if( isset( $response["actions"] ) ){
-			foreach($response["actions"][0]["fields"]  as $fields)
-			{
-				array_push($this->document_fields,new TemplateDocumentFields($fields));
-				switch( $fields["field_category"] ){
-					case "checkbox":
-						$this->field_boolean_data[ $fields["field_label"] ] = new PrefillField($fields);
-						break;
-					case "textfield":
-						$this->field_text_data 	 [ $fields["field_label"] ] = new PrefillField($fields);
-						break;
-					case "dropdown":
-						$this->field_text_data 	 [ $fields["field_label"] ] = new PrefillField($fields);
-						break;
-					case "datefield":
-						$this->field_date_data   [ $fields["field_label"] ]	= new PrefillField($fields) ;
-						break;
-				}		
+			foreach($response["actions"][0]["fields"]  as $fields){
+
+				// array_push($this->document_fields,new TemplateDocumentFields($fields));
+
+                switch( $fields["field_category"] ){
+                    case "checkbox":
+                        $this->field_boolean_data[ $fields["field_label"] ] = new PrefillField($fields);
+                        break;
+                    case "textfield":
+                        $this->field_text_data 	 [ $fields["field_label"] ] = new PrefillField($fields);
+                        break;
+                    case "dropdown":
+                        $this->field_text_data 	 [ $fields["field_label"] ] = new PrefillField($fields);
+                        break;
+                    case "datefield":
+                        $this->field_date_data   [ $fields["field_label"] ]	= new PrefillField($fields) ;
+                        break;
+
+                }
+
 
 			}
 		}
@@ -411,15 +419,15 @@ class TemplateObject
 
 	// -------- setters ---------
 	public function setPrefillTextField( $label, $value ){
-		$this->field_text_data [ $label ]->setFeildValue($value);
+		$this->field_text_data [ $label ]->setFieldValue($value);
 	}
 
 	public function setPrefillBooleanField( $label, $value ){
-		$this->field_boolean_data 	[ $label ]->setFeildValue($value) ;
+		$this->field_boolean_data 	[ $label ]->setFieldValue($value) ;
 	}
 
 	public function setPrefillDateField( $label, $value ){
-		$this->field_date_data 		[ $label ]->setFeildValue($value) ;
+		$this->field_date_data 		[ $label ]->setFieldValue($value) ;
 	}
 
 
@@ -510,9 +518,11 @@ class TemplateObject
 		$templates["notes"] 		 	= $this->notes;
 		$templates["request_name"] 		= (isset( $this->request_name ) && $this->request_name!="") ? $this->request_name : $this->template_name;
 		$templates["custom_data"]	 	= $this->custom_data;
-		$templates["is_bulk"] 		 	= $this->is_bulk;
+		//$templates["is_bulk"] 		 	= $this->is_bulk;
 		//default_fields
-
+        // echo '<pre>';
+        // dd($templates);
+        // die();
 		// $templateJSON["templates"] 		= $templates;
 
 		return array_filter( $templates, function($v) { return !is_null($v); } );
