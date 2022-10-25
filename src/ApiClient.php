@@ -75,9 +75,9 @@ abstract class ApiClient{
                 $path = ZohoSign::getDownloadPath();
                 $Fname = $path."zs_temp_file";
 
-                if( !is_dir($path) ){
-                    throw new SignException("Unable to write to path($path).", -1);
-                }
+                // if( !is_dir($path) ){
+                //     throw new SignException("Unable to write to path($path).", -1);
+                // }
 
                 $fp = fopen ( $Fname, 'w+');
 
@@ -124,8 +124,8 @@ abstract class ApiClient{
         //  }
         if( $authorizedCall ){
             //   SIGN API/Authorized call
-
-            if( $status["http_code"]!=401 ){
+            $retry_attempts = 0;
+            if( $status["http_code"]!= 401 ){
                 $retry_attempts = 0;
             }
 
@@ -186,7 +186,7 @@ abstract class ApiClient{
                     if(  $authorizedCall  ){ // if authorized call and 401, refresh token ..
                         // Access token Expired
                         $resp = ZohoSign::getCurrentUser()->generateAccessTokenUsingRefreshToken();
-                        if( isset($resp) && $retry_attempts==0 ){
+                        if( isset($resp) && $retry_attempts == 0 ){
                             ++$retry_attempts;
                             return self::makeCall( $URL, $method, $queryparams, $postData, $MultipartFormData, $file_response, $authorizedCall  );
                         }else{
